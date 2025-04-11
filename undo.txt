@@ -1,0 +1,10 @@
+Plan to implement Undo button :
+
+Logic: 
+1. As suggested in the question, the user should be able to select a row and remove a transaction. 
+2. After removing the transaction, the total cost should be updated 
+3. The implementation should maintain the Model, View, and Controller model. 
+
+
+
+
