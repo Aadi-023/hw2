@@ -80,5 +80,22 @@ public class ExpenseTrackerController {
     view.refreshTable(filtered);
   }
 
+
+  // For test cases
+  public List<Transaction> applyFilterForTest(String type, String value) {
+    TransactionFilter filter;
+
+    if (type.equalsIgnoreCase("amount")) {
+        filter = new AmountFilter();
+    } else if (type.equalsIgnoreCase("category")) {
+        filter = new CategoryFilter();
+    } else {
+        return List.of();
+    }
+
+    return filter.filter(model.getTransactions(), value);
+  }
+
+
 }
   
