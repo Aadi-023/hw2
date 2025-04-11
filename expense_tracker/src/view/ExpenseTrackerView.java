@@ -19,6 +19,14 @@ public class ExpenseTrackerView extends JFrame {
   private JFormattedTextField amountField;
   private JTextField categoryField;
   private DefaultTableModel model;
+
+  // For filter
+  private JComboBox<String> filterTypeCombo;
+  private JTextField filterValueField;
+  private JButton filterButton;
+
+  // For reset filter
+  private JButton resetFilterButton;
   
 
   public ExpenseTrackerView() {
@@ -54,9 +62,30 @@ public class ExpenseTrackerView extends JFrame {
   
     JPanel buttonPanel = new JPanel();
     buttonPanel.add(addTransactionBtn);
-  
-    // Add panels to frame
-    add(inputPanel, BorderLayout.NORTH);
+
+    // UI for filter
+    JPanel filterPanel = new JPanel();
+    filterTypeCombo = new JComboBox<>(new String[]{"Amount", "Category"});
+    filterValueField = new JTextField(10);
+    filterButton = new JButton("Filter");
+
+    // For reset filter
+    resetFilterButton = new JButton("Reset");
+    filterPanel.add(resetFilterButton);
+
+    filterPanel.add(new JLabel("Filter Type:"));
+    filterPanel.add(filterTypeCombo);
+    filterPanel.add(new JLabel("Value:"));
+    filterPanel.add(filterValueField);
+    filterPanel.add(filterButton);
+
+    // Everything in one panel
+    JPanel topPanel = new JPanel();
+    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+    topPanel.add(filterPanel);
+    topPanel.add(inputPanel);
+
+    add(topPanel, BorderLayout.NORTH);
     add(new JScrollPane(transactionsTable), BorderLayout.CENTER); 
     add(buttonPanel, BorderLayout.SOUTH);
   
@@ -125,4 +154,26 @@ public class ExpenseTrackerView extends JFrame {
   public void setCategoryField(JTextField categoryField) {
     this.categoryField = categoryField;
   }
+
+  // Filter methods
+  public String getFilterType() {
+    return filterTypeCombo.getSelectedItem().toString().toLowerCase();
+  }
+  
+  public String getFilterValue() {
+    return filterValueField.getText();
+  }
+  
+  public JButton getFilterButton() {
+    return filterButton;
+  }
+  
+  public void showError(String message) {
+    JOptionPane.showMessageDialog(this, message);
+  }
+  
+  // For reset filter
+  public JButton getResetFilterButton() {
+    return resetFilterButton;
+}
 }

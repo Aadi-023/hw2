@@ -34,6 +34,18 @@ public class ExpenseTrackerApp {
       }
     });
 
+    // Handle filter button click
+    view.getFilterButton().addActionListener(e -> {
+      String type = view.getFilterType();
+      String value = view.getFilterValue(); 
+      controller.applyFilter(type, value);
+    });
+
+    // Handle reset filter button
+    view.getResetFilterButton().addActionListener(e -> {
+      controller.refresh(); // reloads all transactions
+    });
+
   }
 
 }

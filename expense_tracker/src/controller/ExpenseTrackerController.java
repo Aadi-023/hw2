@@ -46,4 +46,39 @@ public class ExpenseTrackerController {
   }
   
   // Other controller methods
+
+  // Method for applying filter 
+  public void applyFilter(String filterType, String value) {
+    TransactionFilter filter;
+
+    if (filterType.equalsIgnoreCase("amount")) {
+        try {
+            double amount = Double.parseDouble(value);
+            if (!InputValidation.isValidAmount(amount)) {
+                javax.swing.JOptionPane.showMessageDialog(null, "Invalid amount entered for filter.");
+                return;
+            }
+            filter = new AmountFilter();
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid amount format.");
+            return;
+        }
+
+    } else if (filterType.equalsIgnoreCase("category")) {
+        if (!InputValidation.isValidCategory(value)) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Invalid category entered for filter.");
+            return;
+        }
+        filter = new CategoryFilter();
+
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(null, "Unknown filter type.");
+        return;
+    }
+
+    List<Transaction> filtered = filter.filter(model.getTransactions(), value);
+    view.refreshTable(filtered);
+  }
+
 }
+  
