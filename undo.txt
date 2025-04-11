@@ -5,6 +5,52 @@ Logic:
 2. After removing the transaction, the total cost should be updated 
 3. The implementation should maintain the Model, View, and Controller model. 
 
+Steps to implement undo button: 
 
+Step 1: Changes to Model 
+1. We write a function in the ExpenseTrackerModel that removes a transaction. 
+- Psuedocode
+removeTransaction(index):
+    Remove transaction from transaction list at the index
+
+calcTotalCost()
+    Recalculate total by adding up all the remaining transaction
+        loop through transaction list 
+        add all amounts 
+    return total
+
+---
+
+Step 2: Changes to View
+1. Create the undo button in ExpenseTrackerView.java and add a actionListener to it. Then, on click it should run undoButtonClicked() in the ExpenseTrackercontroller.
+2. Write a function that gets the selected index.
+3. Create the updateTable function
+    This function will create a new table from scratch by looping throught the transaction list and adding each transaction as a new row
+4. Next we need the updateTotalCost function that will take care of updating the setting the totalcost. 
+---
+
+Step 3: Add undo button handlers in Controller
+1. We add a function in the ExpenseTrackerController that handles the undo button click event.
+- Psuedocode
+undoButtonClicked():
+    Get the selected row index
+    If index is not -1:
+        Call model.removeTransaction(index)
+        Call view.updateTable( getTransactions() )
+        Call view.updateTotalCost( calcTotalCost() )
+    else:
+        return error 
+
+
+
+So the final flow of the button will be :
+
+1. User clicks Undo button and selects a row. 
+2. View sends the selected row index to Controller.
+3. View calls a method on the Controller to handle the “Undo” action.
+4. Controller calls model.removeTransaction(index) to delete the selected transaction.
+5. Model recalculates total cost and updates the transaction list.
+6. Controller tells View to update the table and totalcost 
+7. View updates the table and totalcost.
 
 
